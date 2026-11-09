@@ -1,0 +1,709 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Réussir le DM Matériaux</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Mise en page : guide de méthode. Barème en tête, 6 étapes avec cases à cocher (note estimée en direct), copie modèle annotée, atelier graphisme, entraînement DS. */
+:root{
+  --bg:#f1f4f5; --surface:#ffffff; --surface2:#e6ecee; --ink:#152a33; --muted:#53666f; --line:#cfd9dd;
+  --petrol:#1f4e5f; --orange:#c95a22;
+  --c1:#2a66d8; --c2:#0d8a7f; --c3:#7346d6; --c4:#cf3a32; --c5:#a86c00; --c6:#b8337f; --c7:#45707f; --c8:#d2561a;
+  --wood:#c08a4e; --wood2:#9a6a34; --stone:#9aa3a8; --stone2:#6f7a80;
+  --good:#1f8a3a; --mid:#b47b00; --bad:#cc3333; --paper:#ffffff;
+  --f-display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0e1519; --surface:#152127; --surface2:#1d2c33; --ink:#e3ecef; --muted:#97aab2; --line:#2a3b43;
+  --petrol:#7fc0d6; --orange:#ff9a5f;
+  --c1:#6d9dff; --c2:#2fc2b3; --c3:#ab8cf6; --c4:#f2756d; --c5:#f0b43f; --c6:#ec78bb; --c7:#8fb8c6; --c8:#ff9150;
+  --wood:#b98450; --wood2:#e0b07a; --stone:#7d878c; --stone2:#b5bec3;
+  --good:#5bd07a; --mid:#f0b43f; --bad:#ff7b7b; --paper:#18252b; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#0e1519; --surface:#152127; --surface2:#1d2c33; --ink:#e3ecef; --muted:#97aab2; --line:#2a3b43;
+  --petrol:#7fc0d6; --orange:#ff9a5f;
+  --c1:#6d9dff; --c2:#2fc2b3; --c3:#ab8cf6; --c4:#f2756d; --c5:#f0b43f; --c6:#ec78bb; --c7:#8fb8c6; --c8:#ff9150;
+  --wood:#b98450; --wood2:#e0b07a; --stone:#7d878c; --stone2:#b5bec3;
+  --good:#5bd07a; --mid:#f0b43f; --bad:#ff7b7b; --paper:#18252b; color-scheme:dark }
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.6;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top, 0px);z-index:10;background:var(--bg)}
+.wrap{max-width:1080px;margin:0 auto}
+h1,h2,h3,h4{font-family:var(--f-display);line-height:1.15;text-wrap:balance;margin:0}
+p{margin:0}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--petrol);outline-offset:2px;border-radius:6px}
+.mono{font-family:var(--f-mono)}
+.muted{color:var(--muted)}
+.small{font-size:15px}
+
+/* En-tête */
+.top{padding-block:40px 20px;display:grid;gap:14px}
+.kicker{font-family:var(--f-mono);font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--orange);font-weight:600}
+.top h1{font-size:clamp(34px,6vw,58px);font-weight:800;letter-spacing:-.02em;color:var(--petrol)}
+.top .intro{max-width:66ch;color:var(--muted);font-size:18px}
+.prob{border-left:4px solid var(--orange);background:var(--surface);padding:12px 16px;border-radius:0 12px 12px 0;font-style:italic;max-width:80ch}
+
+/* Nav + note */
+nav.bar{position:sticky;top:env(safe-area-inset-top, 0px);z-index:5;background:color-mix(in srgb,var(--bg) 93%,transparent);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);margin-inline:calc(-1 * max(16px, env(safe-area-inset-left, 0px)));padding:8px max(16px, env(safe-area-inset-left, 0px))}
+nav.bar .row{max-width:1080px;margin:0 auto;display:flex;gap:12px;align-items:center}
+nav.bar .links{display:flex;gap:6px;overflow-x:auto;flex:1;min-width:0;scrollbar-width:thin}
+nav.bar a{flex:none;text-decoration:none;color:var(--ink);font-size:14px;padding:5px 11px;border-radius:999px;border:1px solid var(--line);background:var(--surface);white-space:nowrap}
+nav.bar a:hover{border-color:var(--petrol)}
+.note-pill{flex:none;display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-weight:600;font-size:14px;background:var(--petrol);color:var(--surface);padding:5px 12px;border-radius:999px;text-decoration:none}
+.note-pill b{font-size:17px}
+
+main{display:grid;gap:60px;padding-block:32px 64px}
+section{scroll-margin-top:70px;display:grid;gap:20px}
+.sec-head{display:grid;gap:6px;padding-bottom:12px;border-bottom:3px solid var(--sc,var(--petrol))}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--sc,var(--orange));font-weight:600}
+.sec-head h2{font-size:clamp(26px,4vw,38px);font-weight:700}
+.sec-head p{max-width:68ch;color:var(--muted)}
+
+/* Barème */
+.scale{display:flex;height:64px;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.scale a{display:flex;flex-direction:column;justify-content:center;align-items:center;text-decoration:none;color:var(--surface);background:var(--c);min-width:0;
+  font-family:var(--f-mono);font-weight:600;border-right:2px solid var(--bg);line-height:1.2;padding:2px}
+.scale a:last-child{border-right:none}
+.scale a span{font-size:11px;opacity:.9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.scale a b{font-size:18px}
+.comp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+.comp{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;text-decoration:none;color:var(--ink)}
+.comp i{width:12px;height:36px;border-radius:4px;background:var(--c)}
+.comp b{font-family:var(--f-mono);color:var(--c)}
+.comp small{display:block;color:var(--muted);font-size:13px}
+.callout{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px;display:grid;gap:6px}
+.callout h3{font-size:19px}
+
+/* Étapes */
+.step{display:grid;grid-template-columns:64px minmax(0,1fr);gap:18px;align-items:start;scroll-margin-top:70px}
+@media (max-width:640px){.step{grid-template-columns:minmax(0,1fr)}}
+.step-n{width:64px;height:64px;border-radius:16px;background:var(--c);color:var(--surface);display:grid;place-items:center;font-family:var(--f-display);font-weight:800;font-size:30px}
+.step-body{display:grid;gap:14px;min-width:0}
+.step-body h3{font-size:24px}
+.step-body h3 small{font-family:var(--f-mono);font-size:13px;font-weight:600;color:var(--c);margin-left:8px;vertical-align:middle}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+@media (max-width:760px){.two{grid-template-columns:minmax(0,1fr)}}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:grid;gap:8px;align-content:start}
+.box h4{font-size:14px;font-family:var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--c,var(--petrol))}
+.box ul{margin:0;padding-left:20px;display:grid;gap:4px}
+.checks{display:grid;gap:4px}
+.chk{display:grid;grid-template-columns:22px 1fr;gap:10px;align-items:start;padding:6px 8px;border-radius:8px;cursor:pointer}
+.chk:hover{background:var(--surface2)}
+.chk input{width:20px;height:20px;margin:2px 0 0;accent-color:var(--c)}
+.chk span b{display:block;font-size:15px}
+.chk span small{display:block;color:var(--muted);font-size:14px;line-height:1.4}
+.chk input:checked + span b{color:var(--c)}
+.cscore{display:flex;justify-content:space-between;align-items:center;font-family:var(--f-mono);font-size:14px;color:var(--muted);border-top:1px dashed var(--line);padding-top:8px}
+.cscore b{color:var(--c);font-size:16px}
+.tip{border-left:4px solid var(--c,var(--orange));background:color-mix(in srgb,var(--c,var(--orange)) 8%,var(--surface));padding:10px 14px;border-radius:0 10px 10px 0;font-size:16px}
+
+/* Avant / après */
+.ba{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.ba-tabs{display:flex;border-bottom:1px solid var(--line)}
+.ba-tabs button{flex:1;border:none;background:var(--surface2);padding:8px;cursor:pointer;font-weight:700;font-size:15px}
+.ba-tabs button[aria-pressed="true"].weak{background:color-mix(in srgb,var(--bad) 18%,var(--surface));color:var(--bad)}
+.ba-tabs button[aria-pressed="true"].strong{background:color-mix(in srgb,var(--good) 18%,var(--surface));color:var(--good)}
+.ba-body{padding:14px 16px;display:grid;gap:8px}
+.ba-body blockquote{margin:0;font-family:var(--f-body);font-size:17px;padding:10px 14px;border-radius:10px;background:var(--surface2)}
+.ba-body .why{font-size:15px;color:var(--muted)}
+
+/* Copie modèle */
+.copy{background:var(--paper);border:1px solid var(--line);border-radius:6px;box-shadow:0 10px 30px -18px rgba(0,0,0,.35);padding:28px clamp(16px,4vw,40px);display:grid;gap:24px}
+.copy h3{font-size:22px;color:var(--petrol);display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.copy h3 .num{font-family:var(--f-mono);font-size:15px;color:var(--orange)}
+.copy .blk{display:grid;gap:8px}
+.copy p,.copy li{max-width:72ch}
+.copy ul{margin:0;padding-left:20px;display:grid;gap:4px}
+.badge{display:inline-flex;align-items:center;font-family:var(--f-mono);font-size:12px;font-weight:600;color:var(--surface);background:var(--c);padding:1px 7px;border-radius:999px;margin-left:4px;vertical-align:1px;white-space:nowrap}
+.copy.no-notes .badge,.copy.no-notes .margin-note{display:none}
+.margin-note{font-size:14px;color:var(--c);border:1px dashed var(--c);border-radius:10px;padding:6px 10px;font-family:var(--f-body)}
+.parts{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.part{border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:grid;gap:6px;border-top:6px solid var(--pc)}
+.part h4{font-size:18px}
+.part dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:4px 10px;font-size:15px}
+.part dt{font-weight:700;color:var(--muted)}
+.part dd{margin:0}
+.prop-line{display:grid;grid-template-columns:minmax(0,190px) minmax(0,1fr);gap:4px 14px;padding:8px 0;border-bottom:1px solid var(--line)}
+.prop-line:last-child{border-bottom:none}
+.prop-line .v{font-family:var(--f-mono);font-weight:600;color:var(--pc)}
+@media (max-width:560px){.prop-line{grid-template-columns:minmax(0,1fr)}}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;min-width:760px;font-size:15px}
+th,td{padding:10px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+th{background:var(--petrol);color:var(--surface);font-family:var(--f-display);font-weight:700;font-size:15px}
+tr:last-child td{border-bottom:none}
+td.pn{font-weight:700;border-left:6px solid var(--pc)}
+td .x{color:var(--bad);font-weight:700}
+td .ok{color:var(--good);font-weight:700}
+.toggle{display:inline-flex;align-items:center;gap:10px;cursor:pointer;font-weight:700}
+.toggle input{width:20px;height:20px;accent-color:var(--petrol)}
+
+/* Croquis */
+.drawing{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:10px;overflow-x:auto}
+.drawing svg{min-width:620px;width:100%;height:auto;display:block}
+.layers{display:flex;flex-wrap:wrap;gap:8px}
+.layers button{border:1px solid var(--line);background:var(--surface2);border-radius:999px;padding:5px 12px;cursor:pointer;font-size:14px}
+.layers button[aria-pressed="true"]{background:var(--petrol);color:var(--surface);border-color:var(--petrol)}
+.d-line{stroke:var(--ink);stroke-width:1.6;fill:var(--paper)}
+.d-dim{stroke:var(--muted);stroke-width:1;fill:none}
+.d-txt{fill:var(--ink);font-family:var(--f-mono);font-size:12px}
+.d-lbl{fill:var(--ink);font-family:var(--f-body);font-size:13px}
+.d-title{fill:var(--petrol);font-family:var(--f-display);font-weight:700;font-size:14px}
+svg .wood{fill:var(--paper)} svg .stone{fill:var(--paper)}
+svg.col .wood{fill:var(--wood)} svg.col .stone{fill:var(--stone)}
+svg.col .grain{display:inline} svg .grain{display:none}
+.ref-tbl{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px}
+.ref{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 12px;display:flex;justify-content:space-between;gap:10px;font-size:15px}
+.ref b{font-family:var(--f-mono);color:var(--petrol);white-space:nowrap}
+.dos{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.do{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:grid;gap:4px;align-content:start}
+.do h4{font-size:17px}
+.do .y{color:var(--good);font-weight:700}
+.do .n{color:var(--bad);font-weight:700}
+
+/* DS */
+.express{counter-reset:ex;display:grid;gap:10px;margin:0;padding:0;list-style:none}
+.express li{counter-increment:ex;display:grid;grid-template-columns:40px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px}
+.express li::before{content:counter(ex);width:34px;height:34px;border-radius:10px;background:var(--orange);color:var(--surface);display:grid;place-items:center;font-family:var(--f-display);font-weight:800}
+.formula-box{font-family:var(--f-mono);font-size:16px;background:var(--surface);border:2px solid var(--orange);border-radius:12px;padding:14px 16px;line-height:1.7}
+.formula-box em{font-style:normal;background:color-mix(in srgb,var(--orange) 18%,transparent);padding:0 4px;border-radius:4px}
+.case{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;display:grid;gap:16px}
+.case-parts{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+@media (max-width:760px){.case-parts{grid-template-columns:minmax(0,1fr)}}
+.cp{display:grid;gap:8px;align-content:start}
+.cp h4{font-size:18px}
+.opts{display:grid;gap:6px}
+.opts button{text-align:left;border:1px solid var(--line);background:var(--surface2);border-radius:10px;padding:8px 12px;cursor:pointer;display:flex;justify-content:space-between;gap:10px}
+.opts button small{color:var(--muted);font-family:var(--f-mono);font-size:12px}
+.opts button[aria-pressed="true"]{border-color:var(--petrol);background:color-mix(in srgb,var(--petrol) 12%,var(--surface));font-weight:700}
+.fb{border-radius:10px;padding:10px 12px;font-size:15px;display:grid;gap:4px;background:var(--surface2)}
+.chip{display:inline-block;font-family:var(--f-mono);font-size:12px;font-weight:600;padding:2px 8px;border-radius:999px;color:var(--surface);width:max-content}
+.chip.g{background:var(--good)} .chip.m{background:var(--mid)} .chip.b{background:var(--bad)}
+.alert{border-radius:10px;padding:10px 14px;font-weight:700}
+.alert.b{background:color-mix(in srgb,var(--bad) 14%,var(--surface));color:var(--bad)}
+.alert.g{background:color-mix(in srgb,var(--good) 14%,var(--surface));color:var(--good)}
+.btn{border:1px solid var(--petrol);background:var(--petrol);color:var(--surface);border-radius:10px;padding:8px 14px;cursor:pointer;font-weight:700;font-size:15px}
+.btn.ghost{background:transparent;color:var(--petrol)}
+.score-panel{background:var(--petrol);color:var(--surface);border-radius:16px;padding:18px;display:grid;gap:12px}
+.score-panel .big{font-family:var(--f-display);font-weight:800;font-size:44px;line-height:1}
+.sp-bars{display:grid;gap:6px}
+.sp-row{display:grid;grid-template-columns:150px minmax(0,1fr) 64px;gap:10px;align-items:center;font-size:14px}
+.sp-row .t{height:10px;border-radius:5px;background:color-mix(in srgb,var(--surface) 25%,transparent);overflow:hidden}
+.sp-row .t i{display:block;height:100%;background:var(--surface);transition:width .4s}
+.sp-row .v{font-family:var(--f-mono);text-align:right}
+@media (max-width:480px){.sp-row{grid-template-columns:110px minmax(0,1fr) 56px}}
+.score-panel .btn{background:var(--surface);color:var(--petrol);border-color:var(--surface);justify-self:start}
+footer{padding-block:24px 48px;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <p class="kicker">STD2A · Physique-Chimie · Corrigé méthodologique</p>
+    <h1>Réussir le DM Matériaux</h1>
+    <p class="intro">Ce qu'il fallait faire pour le DM « Concevoir un objet : choisir et justifier ses matériaux », critère par critère, avec une copie modèle et des conseils pour le croquis. C'est aussi ta méthode pour l'étude de cas du DS.</p>
+    <p class="prob">Problématique : comment le choix des matériaux d'un objet permet-il de répondre à la fois aux contraintes techniques, aux conditions d'usage et aux intentions esthétiques et environnementales d'un projet de design ?</p>
+  </header>
+
+  <nav class="bar" aria-label="Sommaire">
+    <div class="row">
+      <div class="links">
+        <a href="#bareme">Barème</a><a href="#etapes">Les 6 étapes</a><a href="#modele">Copie modèle</a><a href="#graphisme">Graphisme</a><a href="#ds">Spécial DS</a><a href="#ma-note">Ma note</a>
+      </div>
+      <a class="note-pill" href="#ma-note" title="Note estimée d'après les cases cochées">Ma note <b id="pill">0</b>/20</a>
+    </div>
+  </nav>
+
+  <main>
+  <!-- ========== BARÈME ========== -->
+  <section id="bareme">
+    <div class="sec-head"><p class="eyebrow">Comment la copie est notée</p><h2>Le barème : 8 compétences, 20 points</h2>
+      <p>Le correcteur ne note pas « au feeling ». Pour chaque compétence, il vérifie une liste d'attendus précis : présent ou absent. Chaque attendu oublié fait perdre des points, même si le reste est excellent.</p></div>
+    <div class="scale" id="scale"></div>
+    <div class="comp-grid" id="comp-grid"></div>
+    <div class="callout">
+      <h3>Comment utiliser cette page</h3>
+      <p>Dans chaque étape, coche les attendus que ta copie (ou celle que tu prépares) contient vraiment. La note estimée se met à jour en haut de la page et dans la section <a href="#ma-note">Ma note</a>. Elle est calculée comme le fait la grille du professeur : part des attendus réussis × barème de la compétence.</p>
+      <p class="muted small">Tes cases restent cochées sur cet appareil si tu reviens plus tard.</p>
+    </div>
+  </section>
+
+  <!-- ========== ÉTAPES ========== -->
+  <section id="etapes">
+    <div class="sec-head"><p class="eyebrow">La méthode, dans l'ordre</p><h2>Les 6 étapes du dossier</h2>
+      <p>L'ordre compte : on ne peut pas choisir un matériau avant d'avoir dit ce qu'il doit supporter. Suis ces étapes et ton dossier sera structuré naturellement.</p></div>
+    <div id="steps" style="display:grid;gap:44px"></div>
+  </section>
+
+  <!-- ========== COPIE MODÈLE ========== -->
+  <section id="modele">
+    <div class="sec-head"><p class="eyebrow">Un exemple complet</p><h2>Copie modèle : un banc de square</h2>
+      <p>Voici à quoi ressemble un dossier qui coche tous les attendus. Les pastilles colorées montrent quel critère chaque passage valide. Ton objet sera différent, mais la structure doit être la même.</p></div>
+    <label class="toggle" for="notes-t"><input type="checkbox" id="notes-t" checked> Afficher les annotations du correcteur</label>
+    <article class="copy" id="copy">
+      <div class="blk">
+        <h3><span class="num">1.</span> Présentation de l'objet <span class="badge" style="--c:var(--c1)">C1</span></h3>
+        <p><b>Objet :</b> banc public « Halte » pour un square de quartier.<span class="badge" style="--c:var(--c1)">fonction</span></p>
+        <p><b>Fonction :</b> permettre à trois adultes de s'asseoir pour une pause, sans dossier pour pouvoir s'asseoir des deux côtés.</p>
+        <p><b>Contexte d'usage :</b> <u>extérieur</u>, toute l'année : pluie, gel en hiver, plein soleil en été. Le banc est posé sur des pavés.<span class="badge" style="--c:var(--c1)">contexte</span></p>
+        <p><b>Utilisateurs visés :</b> tout public (personnes âgées, parents, enfants). Usage intensif, avec un risque de dégradations.<span class="badge" style="--c:var(--c1)">utilisateurs</span></p>
+        <p><b>Dimensions :</b> L 180 × P 45 × H 45 cm (voir le croquis coté dans la partie <a href="#graphisme">Graphisme</a>).<span class="badge" style="--c:var(--c1)">dessin coté</span></p>
+      </div>
+
+      <div class="blk">
+        <h3><span class="num">2.</span> Parties de l'objet et contraintes <span class="badge" style="--c:var(--c2)">C2</span></h3>
+        <div class="parts">
+          <div class="part" style="--pc:var(--wood2)"><h4>Partie 1 : l'assise (4 lattes)</h4><dl>
+            <dt>Mécanique</dt><dd>travaille en flexion sous le poids (jusqu'à 3 adultes ≈ 250 kg)</dd>
+            <dt>Environnement</dt><dd>pluie, UV, gel : ne doit ni pourrir ni se fendre</dd>
+            <dt>Esthétique</dt><dd>aspect chaleureux et naturel, toucher agréable</dd>
+            <dt>Sécurité</dt><dd>pas d'échardes ni d'arêtes vives ; ne doit pas brûler au soleil</dd>
+            <dt>Budget</dt><dd>matériau courant ; une latte abîmée doit être facile à remplacer</dd></dl></div>
+          <div class="part" style="--pc:var(--stone2)"><h4>Partie 2 : le piètement (2 dalles)</h4><dl>
+            <dt>Mécanique</dt><dd>travaille en compression (porte tout le poids) ; résiste aux chocs</dd>
+            <dt>Environnement</dt><dd>contact avec le sol humide, gel : ne doit pas rouiller</dd>
+            <dt>Esthétique</dt><dd>massif et minéral, en accord avec les pavés du square</dd>
+            <dt>Sécurité</dt><dd>stable : ne doit ni basculer ni pouvoir être emporté</dd>
+            <dt>Budget</dt><dd>durable sans entretien, même si l'achat est plus cher</dd></dl></div>
+        </div>
+        <p class="margin-note" style="--c:var(--c2)">Les 5 types de contraintes sont donnés <b>pour chaque partie</b>, pas une seule fois pour tout l'objet.</p>
+      </div>
+
+      <div class="blk">
+        <h3><span class="num">3.</span> Choix des matériaux <span class="badge" style="--c:var(--c3)">C3</span></h3>
+        <ul>
+          <li><b>Assise :</b> famille des <b>organiques</b>, sous-catégorie <b>naturels</b> → <b>chêne massif huilé</b>.<span class="badge" style="--c:var(--c3)">matériau précis</span></li>
+          <li><b>Piètement :</b> famille des <b>minéraux</b>, sous-catégorie <b>roches</b> → <b>granit à surface flammée</b>.<span class="badge" style="--c:var(--c3)">2 familles différentes</span></li>
+        </ul>
+        <p class="margin-note" style="--c:var(--c3)">« Bois » ou « pierre » ne suffit pas : on nomme le matériau exact (chêne, granit), avec sa famille et sa sous-catégorie.</p>
+      </div>
+
+      <div class="blk">
+        <h3><span class="num">4.</span> Argumentation scientifique <span class="badge" style="--c:var(--c4)">C4</span></h3>
+        <h4 style="color:var(--wood2)">Assise en chêne</h4>
+        <div style="--pc:var(--wood2)">
+          <div class="prop-line"><span class="v">ρ ≈ 0,75 g/cm³</span><span>Une latte de 180 × 10 × 3 cm (5 400 cm³) pèse environ 4 kg : un seul agent peut la poser ou la remplacer.<span class="badge" style="--c:var(--c4)">analyse</span></span></div>
+          <div class="prop-line"><span class="v">E ≈ 10 GPa</span><span>Le rapport E/ρ ≈ 13 est correct : la latte reste assez rigide pour sa faible masse et plie peu sous une personne assise.<span class="badge" style="--c:var(--c4)">raisonnement E/ρ</span></span></div>
+          <div class="prop-line"><span class="v">λ ≈ 0,17 W/(m·K)</span><span>Le chêne est un isolant thermique : l'assise reste agréable au toucher en plein soleil comme par temps de gel.</span></div>
+          <div class="prop-line"><span class="v">Dureté ≈ 2 à 3 (Mohs)</span><span>Le chêne se raye (clés, couteau) : il se patinera. C'est accepté pour l'aspect naturel, et on peut le poncer puis le huiler à nouveau.</span></div>
+        </div>
+        <h4 style="color:var(--stone2)">Piètement en granit</h4>
+        <div style="--pc:var(--stone2)">
+          <div class="prop-line"><span class="v">ρ ≈ 2,7 g/cm³</span><span>Une dalle de 42 × 40 × 8 cm (13 440 cm³) pèse environ 36 kg : le banc est très stable et difficile à emporter.</span></div>
+          <div class="prop-line"><span class="v">RC ≈ 150 à 250 MPa</span><span>Trois adultes (≈ 2 500 N) répartis sur deux dalles de 40 × 8 cm (2 × 32 000 mm²) créent une contrainte d'environ 0,04 MPa, des milliers de fois moins que RC.<span class="badge" style="--c:var(--c4)">calcul</span></span></div>
+          <div class="prop-line"><span class="v">RT ≈ 10 MPa</span><span>La résistance à la traction est faible : la dalle doit être posée debout et travailler uniquement en compression, jamais en porte-à-faux.</span></div>
+          <div class="prop-line"><span class="v">Dureté ≈ 6 à 7 (Mohs)</span><span>Plus dur que l'acier d'un couteau (5,5) : le granit résiste aux rayures et aux graffitis gravés.</span></div>
+        </div>
+        <p class="margin-note" style="--c:var(--c4)">Chaque valeur a son unité ET une conséquence concrète pour le banc. C'est ce qui fait la différence entre « recopié » et « analysé ».</p>
+      </div>
+
+      <div class="blk">
+        <h3><span class="num">5.</span> Matrice de décision <span class="badge" style="--c:var(--c5)">C5</span></h3>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Partie de l'objet</th><th>Contrainte principale</th><th>Matériau candidat 1</th><th>Matériau candidat 2</th><th>Matériau retenu + justification</th></tr></thead>
+          <tbody>
+            <tr><td class="pn" style="--pc:var(--wood2)">Assise</td><td>Flexion + confort au toucher en extérieur</td>
+              <td><b>Aluminium</b> : E/ρ ≈ 26, excellent. <span class="x">Mais</span> λ ≈ 237 W/(m·K) : brûlant l'été, glacial l'hiver.</td>
+              <td><b>PVC</b> : ne pourrit pas. <span class="x">Mais</span> E ≈ 3 GPa (E/ρ ≈ 2) : les lattes plieraient.</td>
+              <td><span class="ok">Chêne huilé</span> : E/ρ ≈ 13 suffisant, λ ≈ 0,17 W/(m·K) agréable, aspect naturel. Écartés : aluminium (λ trop élevé), PVC (E trop faible).</td></tr>
+            <tr><td class="pn" style="--pc:var(--stone2)">Piètement</td><td>Compression + stabilité + pas de rouille</td>
+              <td><b>Acier</b> : E ≈ 200 GPa, RC 250 à 400 MPa. <span class="x">Mais</span> rouille sans galvanisation ni peinture.</td>
+              <td><b>Béton armé</b> : RC ≈ 30 MPa suffit, économique. <span class="x">Mais</span> aspect brut, arêtes qui s'écaillent aux chocs.</td>
+              <td><span class="ok">Granit flammé</span> : RC 150 à 250 MPa, masse stable, dureté 6 à 7, ne rouille pas. Écartés : acier (corrosion, entretien), béton (esthétique, usure).</td></tr>
+          </tbody></table></div>
+        <p class="margin-note" style="--c:var(--c5)">La dernière colonne dit pourquoi on garde l'un ET pourquoi on écarte les deux autres, avec des valeurs.</p>
+      </div>
+
+      <div class="blk">
+        <h3><span class="num">6.</span> Synthèse <span class="badge" style="--c:var(--c6)">C6</span></h3>
+        <p>Pour répondre à la problématique, chaque partie a reçu le matériau adapté à sa sollicitation : le chêne pour l'assise, qui travaille en flexion et touche le corps ; le granit pour le piètement, qui travaille en compression et doit résister au temps et aux dégradations. Ensemble, ils donnent au banc un aspect naturel en accord avec le square.<span class="badge" style="--c:var(--c6)">problématique</span></p>
+        <p><b>Compromis :</b> le chêne demande d'être huilé tous les un à deux ans, en échange d'un vrai confort ; le granit est lourd et coûteux à transporter, en échange d'une stabilité sans entretien.<span class="badge" style="--c:var(--c6)">compromis</span></p>
+        <p><b>Limites :</b> sur 1,6 m entre les deux appuis, les lattes peuvent fléchir sous trois adultes. La liaison bois-granit nécessite des pièces en acier inoxydable.<span class="badge" style="--c:var(--c6)">limites</span></p>
+        <p><b>Pistes d'amélioration :</b> ajouter une traverse centrale sous les lattes ; utiliser un bois local certifié naturellement durable (robinier) ; choisir un granit de carrière régionale pour réduire le transport.<span class="badge" style="--c:var(--c6)">pistes</span></p>
+      </div>
+    </article>
+  </section>
+
+  <!-- ========== GRAPHISME ========== -->
+  <section id="graphisme" style="--sc:var(--c8)">
+    <div class="sec-head"><p class="eyebrow">C1 · C7 · C8 : jusqu'à 5 points en jeu</p><h2>Le croquis et la mise en page</h2>
+      <p>Le dessin compte trois fois : dans la présentation de l'objet (croquis présent et coté), dans la présentation (légendes) et dans la production graphique (soin, couleur, proportions). Active les calques pour voir ce que chaque couche apporte.</p></div>
+    <div class="layers" id="layers">
+      <button type="button" data-l="col" aria-pressed="true">Couleurs des matériaux</button>
+      <button type="button" data-l="dim" aria-pressed="true">Cotes</button>
+      <button type="button" data-l="lbl" aria-pressed="true">Légendes</button>
+      <button type="button" data-l="hum" aria-pressed="true">Échelle humaine</button>
+    </div>
+    <div class="drawing">
+      <svg id="sketch" class="col" viewBox="0 0 720 430" role="img" aria-label="Croquis coté du banc, vue de face et vue de côté">
+        <defs>
+          <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--muted)"/></marker>
+        </defs>
+        <text x="60" y="30" class="d-title">Vue de face</text>
+        <text x="470" y="30" class="d-title">Vue de côté</text>
+        <line x1="20" y1="360" x2="700" y2="360" stroke="var(--muted)" stroke-width="1.5"/>
+        <!-- face : assise 180 cm -> 324 px, 1 cm = 1,8 px -->
+        <rect x="60" y="279" width="324" height="8" class="d-line wood"/>
+        <g class="grain"><path d="M70 283 H170 M190 282 H300 M320 284 H375" stroke="var(--wood2)" stroke-width="1"/></g>
+        <rect x="78" y="287" width="14" height="73" class="d-line stone"/>
+        <rect x="352" y="287" width="14" height="73" class="d-line stone"/>
+        <!-- côté : 45 cm -> 81 px -->
+        <g>
+          <rect x="470" y="279" width="18" height="8" class="d-line wood"/><rect x="491" y="279" width="18" height="8" class="d-line wood"/>
+          <rect x="512" y="279" width="18" height="8" class="d-line wood"/><rect x="533" y="279" width="18" height="8" class="d-line wood"/>
+          <rect x="474" y="287" width="72" height="73" class="d-line stone"/>
+          <g class="grain" fill="var(--stone2)"><circle cx="490" cy="300" r="1.4"/><circle cx="520" cy="312" r="1.2"/><circle cx="502" cy="330" r="1.5"/><circle cx="532" cy="345" r="1.3"/><circle cx="484" cy="350" r="1.2"/><circle cx="536" cy="298" r="1.4"/>
+            <circle cx="85" cy="300" r="1.2"/><circle cx="86" cy="330" r="1.3"/><circle cx="358" cy="310" r="1.2"/><circle cx="359" cy="340" r="1.3"/></g>
+        </g>
+        <!-- cotes -->
+        <g id="L-dim">
+          <line x1="60" y1="292" x2="60" y2="400" class="d-dim" stroke-dasharray="3 3"/><line x1="384" y1="292" x2="384" y2="400" class="d-dim" stroke-dasharray="3 3"/>
+          <line x1="62" y1="392" x2="382" y2="392" class="d-dim" marker-start="url(#ar)" marker-end="url(#ar)"/>
+          <text x="222" y="386" text-anchor="middle" class="d-txt">180</text>
+          <line x1="38" y1="279" x2="56" y2="279" class="d-dim" stroke-dasharray="3 3"/>
+          <line x1="44" y1="281" x2="44" y2="358" class="d-dim" marker-start="url(#ar)" marker-end="url(#ar)"/>
+          <text x="38" y="324" text-anchor="end" class="d-txt">45</text>
+          <line x1="470" y1="392" x2="551" y2="392" class="d-dim" marker-start="url(#ar)" marker-end="url(#ar)"/>
+          <line x1="470" y1="290" x2="470" y2="400" class="d-dim" stroke-dasharray="3 3"/><line x1="551" y1="290" x2="551" y2="400" class="d-dim" stroke-dasharray="3 3"/>
+          <text x="510" y="386" text-anchor="middle" class="d-txt">45</text>
+          <line x1="470" y1="262" x2="488" y2="262" class="d-dim" marker-start="url(#ar)" marker-end="url(#ar)"/>
+          <text x="479" y="256" text-anchor="middle" class="d-txt">10</text>
+          <text x="470" y="418" class="d-txt">cotes en cm</text>
+        </g>
+        <!-- légendes -->
+        <g id="L-lbl">
+          <line x1="150" y1="279" x2="150" y2="210" stroke="var(--ink)" stroke-width="1"/><circle cx="150" cy="283" r="2.5" fill="var(--ink)"/>
+          <text x="150" y="190" class="d-lbl" font-weight="700">① Assise : 4 lattes</text>
+          <text x="150" y="206" class="d-lbl">chêne massif huilé</text>
+          <line x1="359" y1="320" x2="410" y2="240" stroke="var(--ink)" stroke-width="1"/><circle cx="359" cy="320" r="2.5" fill="var(--ink)"/>
+          <text x="330" y="220" class="d-lbl" font-weight="700">② Piètement : 2 dalles</text>
+          <text x="330" y="236" class="d-lbl">granit flammé, ép. 8 cm</text>
+        </g>
+        <!-- échelle humaine : 170 cm -> 306 px -->
+        <g id="L-hum" stroke="var(--muted)" stroke-width="2" fill="none" stroke-linecap="round">
+          <circle cx="640" cy="72" r="16"/>
+          <line x1="640" y1="88" x2="640" y2="230"/>
+          <line x1="640" y1="120" x2="612" y2="200"/><line x1="640" y1="120" x2="668" y2="200"/>
+          <line x1="640" y1="230" x2="622" y2="360"/><line x1="640" y1="230" x2="658" y2="360"/>
+          <text x="640" y="48" text-anchor="middle" class="d-txt" stroke="none">1,70 m</text>
+        </g>
+      </svg>
+    </div>
+
+    <div class="dos">
+      <div class="do"><h4>Deux vues au minimum</h4><p>Une vue de face et une vue de côté (ou une perspective + une vue cotée). Une seule perspective ne permet pas de lire les dimensions.</p></div>
+      <div class="do"><h4>Des cotes lisibles</h4><p>Ligne de cote fine avec une flèche à chaque bout, valeur au-dessus, unité indiquée une seule fois (« cotes en cm »). Au minimum : longueur, profondeur, hauteur, et l'épaisseur d'une pièce clé.</p></div>
+      <div class="do"><h4>Des légendes reliées</h4><p>Un trait de rappel fin et droit qui part de la pièce. Texte horizontal : nom de la partie + matériau précis. Pas de flèches qui se croisent.</p></div>
+      <div class="do"><h4>Un code couleur par matériau</h4><p>La même couleur pour le chêne partout : croquis, titres, matrice. Suggère la matière (veinage du bois, moucheté du granit) sans surcharger.</p></div>
+      <div class="do"><h4>Une couleur maîtrisée</h4><p><span class="y">✓</span> crayons ou feutres posés dans le même sens, sans déborder, ombre légère sur un côté. <span class="n">✗</span> remplissage rapide qui dépasse ou qui cache les traits.</p></div>
+      <div class="do"><h4>Des proportions justes</h4><p>Ajoute une silhouette humaine ou vérifie avec les repères ci-dessous. Une assise de 80 cm de haut ou une table de 30 cm se voient tout de suite.</p></div>
+    </div>
+
+    <div class="callout">
+      <h3>Repères de proportions (tailles courantes)</h3>
+      <div class="ref-tbl">
+        <div class="ref">Hauteur d'assise<b>43–47 cm</b></div>
+        <div class="ref">Table, bureau<b>72–76 cm</b></div>
+        <div class="ref">Table basse<b>35–45 cm</b></div>
+        <div class="ref">Plan de travail debout<b>90 cm</b></div>
+        <div class="ref">Largeur par personne assise<b>≈ 60 cm</b></div>
+        <div class="ref">Étagère atteignable<b>≤ 180 cm</b></div>
+        <div class="ref">Assise enfant (6-10 ans)<b>30–35 cm</b></div>
+        <div class="ref">Garde-corps<b>≥ 100 cm</b></div>
+      </div>
+    </div>
+
+    <div class="two">
+      <div class="box" style="--c:var(--c7)" data-comp="C7"></div>
+      <div class="box" style="--c:var(--c8)" data-comp="C8"></div>
+    </div>
+  </section>
+
+  <!-- ========== DS ========== -->
+  <section id="ds" style="--sc:var(--orange)">
+    <div class="sec-head"><p class="eyebrow">Préparer l'étude de cas</p><h2>Spécial DS : la même méthode, en version courte</h2>
+      <p>L'étude de cas du DS demande le même raisonnement que le DM, en moins long et en temps limité. Garde la structure, réduis la longueur.</p></div>
+    <ol class="express">
+      <li><div><b>Lis l'énoncé et souligne</b> l'usage (intérieur ou extérieur), les utilisateurs et ce que l'objet doit supporter.</div></li>
+      <li><div><b>Nomme les deux parties</b> et écris pour chacune <b>sa contrainte principale</b> en une ligne.</div></li>
+      <li><div><b>Choisis un matériau précis</b> par partie, avec sa famille et sa sous-catégorie. Vérifie : deux familles différentes.</div></li>
+      <li><div><b>Justifie avec 3 valeurs</b> chiffrées + unité, chacune suivie de sa conséquence pour l'usage.</div></li>
+      <li><div><b>Écarte au moins un autre candidat</b> par partie avec une valeur (une ligne de matrice suffit).</div></li>
+      <li><div><b>Conclus en 2 ou 3 phrases</b> : un compromis, une limite.</div></li>
+    </ol>
+    <div class="callout">
+      <h3>La phrase qui rapporte des points</h3>
+      <div class="formula-box">Le <em>matériau</em> a un(e) <em>propriété</em> de <em>valeur + unité</em>,<br>donc <em>conséquence concrète pour l'objet et son utilisateur</em>.</div>
+      <p class="small muted">Exemple : « L'aluminium a une masse volumique de 2,7 g/cm³, soit trois fois moins que l'acier (7,8 g/cm³), donc le bras de la lampe reste léger et ne fait pas basculer le pied. »</p>
+    </div>
+
+    <div class="case" id="case">
+      <div>
+        <p class="eyebrow">Entraînement</p>
+        <h3 style="font-size:24px">Mini étude de cas : une lampe de bureau pour l'internat</h3>
+        <p class="muted" style="margin-top:6px">Lampe articulée posée sur le bureau d'une chambre d'internat (usage intérieur, lycéens). Ampoule LED, qui chauffe peu. Deux parties : un <b>socle</b> qui doit rendre la lampe stable, et un <b>bras avec la tête</b>, manipulé tous les jours, qui doit rester rigide sans faire basculer la lampe. Choisis un matériau pour chaque partie.</p>
+      </div>
+      <div class="case-parts">
+        <div class="cp"><h4>① Le socle</h4><div class="opts" id="opt-socle"></div><div class="fb" id="fb-socle"><span class="muted">Choisis un matériau.</span></div></div>
+        <div class="cp"><h4>② Le bras et la tête</h4><div class="opts" id="opt-bras"></div><div class="fb" id="fb-bras"><span class="muted">Choisis un matériau.</span></div></div>
+      </div>
+      <div id="fam-alert"></div>
+      <div id="my-matrix"></div>
+    </div>
+  </section>
+
+  <!-- ========== MA NOTE ========== -->
+  <section id="ma-note">
+    <div class="sec-head"><p class="eyebrow">Auto-évaluation</p><h2>Ma note estimée</h2>
+      <p>Calculée à partir des cases cochées dans les étapes et dans la partie graphisme. Les compétences en dessous de la moitié sont celles à retravailler en priorité pour le DS.</p></div>
+    <div class="score-panel">
+      <div><span class="big" id="total">0</span> <span class="mono">/ 20</span></div>
+      <div class="sp-bars" id="sp-bars"></div>
+      <button type="button" class="btn" id="reset">Décocher toutes les cases</button>
+    </div>
+  </section>
+  </main>
+
+  <footer>Valeurs des propriétés : ordres de grandeur du tableau du sujet (§6). Barème : grille de correction du DM (8 compétences, 43 attendus notés présent / absent).</footer>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const fmt = (x, d = 1) => Number(x).toLocaleString('fr-FR', { maximumFractionDigits: d, minimumFractionDigits: d });
+
+/* ===== Compétences et attendus (grille de correction) ===== */
+const C = [
+  {id:'C1', n:'Présenter l\'objet', pts:3, col:'var(--c1)', crit:[
+    ['Croquis / dessin présent','Croquis ou dessin de l\'objet fourni'],
+    ['Dessin coté','Dimensions principales indiquées sur le croquis'],
+    ['Fonction précisée','Rôle de l\'objet clairement énoncé'],
+    ['Contexte d\'usage précisé','Usage intérieur ou extérieur explicité'],
+    ['Utilisateurs visés précisés','Public visé : enfants, adultes, collectivité…'],
+    ['Objet conforme au sujet','Au moins 2 parties distinctes dans 2 familles de matériaux différentes'],
+    ['Dossier structuré et lisible','Plan clair, parties repérables, document lisible']]},
+  {id:'C2', n:'Contraintes', pts:3, col:'var(--c2)', crit:[
+    ['Au moins 2 parties identifiées','Parties de l\'objet nommées et délimitées'],
+    ['Contraintes mécaniques','Charges, chocs, flexion, compression, rigidité…'],
+    ['Contraintes environnementales','Humidité, pluie, UV, gel, corrosion… en lien avec intérieur / extérieur'],
+    ['Contraintes esthétiques','Aspect, couleur, texture, toucher, intention du projet'],
+    ['Contraintes de sécurité','Risques : coupure, bris, brûlure, électricité…'],
+    ['Contrainte de budget','Coût des matériaux et / ou de la mise en œuvre'],
+    ['Contraintes rattachées à chaque partie','Formulées partie par partie, pas seulement pour l\'objet entier']]},
+  {id:'C3', n:'Choix des matériaux', pts:3, col:'var(--c3)', crit:[
+    ['Partie 1 : famille et sous-catégorie justes','Organique / métal / minéral / composite + sous-catégorie'],
+    ['Partie 1 : matériau précis nommé','Ex. : chêne, aluminium, verre trempé… et pas « bois » ou « métal »'],
+    ['Partie 2 : famille et sous-catégorie justes','Organique / métal / minéral / composite + sous-catégorie'],
+    ['Partie 2 : matériau précis nommé','Ex. : chêne, aluminium, verre trempé… et pas « bois » ou « métal »'],
+    ['Deux familles différentes','Les deux parties relèvent de deux familles différentes'],
+    ['Choix cohérents avec l\'usage','Matériaux adaptés au contexte (extérieur : eau, corrosion, UV…)']]},
+  {id:'C4', n:'Argumentation', pts:3, col:'var(--c4)', crit:[
+    ['Partie 1 : au moins 3 propriétés chiffrées','ρ, dureté, E, RC, λ, conductivité…'],
+    ['Partie 1 : unités correctes','Valeur + unité : g/cm³, GPa, MPa, W/(m·K)…'],
+    ['Partie 1 : valeurs analysées, pas recopiées','Conséquence concrète pour l\'usage : rigidité, légèreté, toucher…'],
+    ['Partie 2 : au moins 3 propriétés chiffrées','ρ, dureté, E, RC, λ, conductivité…'],
+    ['Partie 2 : unités correctes','Valeur + unité : g/cm³, GPa, MPa, W/(m·K)…'],
+    ['Partie 2 : valeurs analysées, pas recopiées','Conséquence concrète pour l\'usage : rigidité, légèreté, toucher…'],
+    ['Raisonnement physique pertinent','Ex. : rapport E/ρ, RC élevée mais RT faible, λ et confort au toucher…'],
+    ['Vocabulaire scientifique adapté','Masse volumique, module de Young, conductivité… employés à bon escient']]},
+  {id:'C5', n:'Matrice de décision', pts:3, col:'var(--c5)', crit:[
+    ['Matrice présente et complète','Tableau Partie / Contrainte / Candidat 1 / Candidat 2 / Retenu'],
+    ['Contrainte principale par partie','Indiquée pour chaque ligne'],
+    ['Partie 1 : au moins 2 candidats','Matériaux candidats comparés'],
+    ['Partie 2 : au moins 2 candidats','Matériaux candidats comparés'],
+    ['Choix final justifié face aux candidats écartés','On explique pourquoi les autres sont écartés']]},
+  {id:'C6', n:'Synthèse', pts:2, col:'var(--c6)', crit:[
+    ['Retour à la problématique','La synthèse répond explicitement à la question posée'],
+    ['Compromis identifiés','Ex. : masse / rigidité, coût / durabilité, esthétique / sécurité'],
+    ['Limites identifiées','Faiblesses du choix reconnues'],
+    ['Pistes d\'amélioration','Au moins une piste proposée']]},
+  {id:'C7', n:'Présentation', pts:1, col:'var(--c7)', crit:[
+    ['Orthographe et syntaxe','Relire, en particulier les noms de matériaux et d\'unités'],
+    ['Mise en page soignée','Titres, marges, tableau tracé proprement'],
+    ['Schémas / croquis légendés','Chaque partie nommée avec son matériau']]},
+  {id:'C8', n:'Production graphique', pts:2, col:'var(--c8)', crit:[
+    ['Schéma soigné','Traits nets, propreté'],
+    ['Finement colorié','Mise en couleur fine et maîtrisée'],
+    ['Proportions cohérentes','Entre les parties, et avec l\'usage']]}];
+
+/* ===== Contenu des étapes ===== */
+const STEPS = [
+  {c:0, t:'Présenter l\'objet', do:[
+    'Un <b>croquis coté</b> (au moins longueur, largeur, hauteur).',
+    'La <b>fonction</b> en une phrase : à quoi sert l\'objet ?',
+    'Le <b>contexte</b> : intérieur ou extérieur, et ce que cela implique (pluie, soleil, chauffage…).',
+    'Les <b>utilisateurs</b> : enfants, adultes, personnes âgées, collectivité…',
+    'Vérifier que l\'objet a bien <b>deux parties</b> faites dans <b>deux familles</b> différentes.'],
+   tip:'Écris « intérieur » ou « extérieur » en toutes lettres. C\'est un attendu à part entière, et tous tes choix de matériaux en dépendent.'},
+  {c:1, t:'Découper l\'objet et lister les contraintes', do:[
+    'Nommer au moins <b>deux parties</b> (assise / pieds, plateau / piètement, abat-jour / pied…).',
+    'Pour <b>chaque partie</b>, passer en revue les 5 types : <b>mécanique, environnement, esthétique, sécurité, budget</b>.',
+    'Rester concret : « supporte 100 kg en flexion » plutôt que « doit être solide ».'],
+   tip:'Fais un mini-tableau à 5 lignes par partie. Une case vide te montre tout de suite le type de contrainte oublié.'},
+  {c:2, t:'Choisir famille, sous-catégorie et matériau', do:[
+    'Pour chaque partie : <b>famille</b> (organiques, métaux, minéraux, composites) → <b>sous-catégorie</b> → <b>matériau précis</b>.',
+    'Les deux parties dans <b>deux familles différentes</b> (acier + aluminium = deux métaux : non conforme).',
+    'Un choix <b>cohérent avec l\'usage</b> : à l\'extérieur, penser eau, rouille, UV, gel.'],
+   tip:'Le bois est classé dans les organiques naturels (c\'est aussi un composite naturel). Le béton armé est un composite. Le verre est un minéral.'},
+  {c:3, t:'Argumenter avec des valeurs', do:[
+    '<b>3 propriétés par matériau</b>, prises dans le tableau du §6 : ρ, dureté, E, RC, λ, conductivité électrique.',
+    'Toujours <b>valeur + unité</b> : 0,75 g/cm³, 10 GPa, 0,17 W/(m·K).',
+    'Après chaque valeur, la <b>conséquence</b> pour l\'objet : léger, rigide, agréable au toucher, se raye…',
+    'Bonus de raisonnement : <b>E/ρ</b> (rigide et léger ?), <b>RC vs RT</b> (écrasé ou étiré ?), <b>λ</b> et confort au toucher.'],
+   tip:'Une valeur sans conséquence ne rapporte pas le point « analysé ». Demande-toi à chaque fois : « et donc, pour mon objet ? »'},
+  {c:4, t:'Construire la matrice de décision', do:[
+    'Le tableau du sujet : <b>Partie / Contrainte principale / Candidat 1 / Candidat 2 / Retenu + justification</b>.',
+    'Une ligne <b>par partie</b>, avec <b>au moins deux matériaux candidats</b> comparés.',
+    'Dans la dernière colonne, dire <b>pourquoi on écarte</b> les autres, avec une valeur.'],
+   tip:'Un bon candidat écarté est un matériau plausible qui échoue sur UNE propriété précise : l\'aluminium écarté pour une assise à cause de λ, par exemple.'},
+  {c:5, t:'Rédiger la synthèse', do:[
+    'Répondre <b>explicitement à la problématique</b> : techniques + usage + esthétique / environnement.',
+    'Nommer au moins un <b>compromis</b> : on gagne quelque chose, on en perd une autre.',
+    'Reconnaître une <b>limite</b> et proposer une <b>piste d\'amélioration</b>.'],
+   tip:'Une synthèse n\'est pas un résumé. « Notre banc est en chêne et en granit » ne rapporte rien ; « le chêne demande un entretien en échange du confort » est un compromis.'}];
+
+const BA = {
+  2: {weak:'Assise : bois. Pieds : métal.', wwhy:'Familles seulement, pas de matériau précis ni de sous-catégorie : 0 sur les critères « matériau précis nommé ».',
+      strong:'Assise : chêne massif huilé (organiques, naturels). Piètement : granit flammé (minéraux, roches).', swhy:'Matériau précis, famille et sous-catégorie, deux familles différentes.'},
+  3: {weak:'Le chêne : masse volumique 0,75, module de Young 10, conductivité thermique 0,17. C\'est donc un bon matériau.', wwhy:'Pas d\'unités et aucune conséquence : les valeurs sont recopiées, pas analysées.',
+      strong:'λ ≈ 0,17 W/(m·K) : le chêne est un isolant thermique. Au soleil comme par temps de gel, l\'assise reste agréable au toucher, alors qu\'une assise en aluminium (λ ≈ 237 W/(m·K)) brûlerait ou glacerait.', swhy:'Valeur + unité + conséquence pour l\'utilisateur + comparaison chiffrée.'},
+  4: {weak:'Matériau retenu : le chêne, parce que c\'est joli et solide.', wwhy:'Rien sur les candidats écartés, aucun argument physique.',
+      strong:'Chêne retenu. Aluminium écarté car trop conducteur (λ ≈ 237 W/(m·K)), PVC écarté car trop souple (E ≈ 3 GPa).', swhy:'Chaque candidat est écarté pour une raison mesurable.'},
+  5: {weak:'En conclusion, notre banc est en chêne et en granit, il est très bien.', wwhy:'Un résumé, sans problématique, sans compromis, sans limite.',
+      strong:'Le chêne apporte le confort au toucher mais demande un entretien régulier ; le granit assure la stabilité mais coûte cher à transporter. Limite : les lattes peuvent fléchir sur 1,6 m ; piste : ajouter une traverse centrale.', swhy:'Compromis, limite et piste d\'amélioration en trois phrases.'}};
+
+/* ===== Persistance ===== */
+let state = {};
+try { state = JSON.parse(localStorage.getItem('dm-mat-checks') || '{}') || {}; } catch (e) { state = {}; }
+function save(){ try { localStorage.setItem('dm-mat-checks', JSON.stringify(state)); } catch (e) {} }
+
+function checklist(ci){
+  const comp = C[ci];
+  const box = document.createElement('div'); box.className = 'box'; box.style.setProperty('--c', comp.col);
+  box.innerHTML = `<h4>${comp.id} · ce que le correcteur coche</h4><div class="checks"></div><div class="cscore"><span>${comp.n}</span><span><b data-cs="${comp.id}">0</b> / ${comp.pts}</span></div>`;
+  const wrap = box.querySelector('.checks');
+  comp.crit.forEach((cr, k) => {
+    const id = `${comp.id}-${k}`;
+    const lab = document.createElement('label'); lab.className = 'chk'; lab.htmlFor = id;
+    lab.innerHTML = `<input type="checkbox" id="${id}"><span><b>${cr[0]}</b><small>${cr[1]}</small></span>`;
+    const inp = lab.querySelector('input'); inp.checked = !!state[id];
+    inp.addEventListener('change', () => { state[id] = inp.checked; save(); updateScore(); });
+    wrap.appendChild(lab);
+  });
+  return box;
+}
+function beforeAfter(ba){
+  const el = document.createElement('div'); el.className = 'ba';
+  el.innerHTML = `<div class="ba-tabs"><button type="button" class="weak" aria-pressed="true">✗ Version faible</button><button type="button" class="strong" aria-pressed="false">✓ Version réussie</button></div><div class="ba-body"><blockquote></blockquote><p class="why"></p></div>`;
+  const [bw, bs] = el.querySelectorAll('button'), q = el.querySelector('blockquote'), w = el.querySelector('.why');
+  const show = s => { bw.setAttribute('aria-pressed', !s); bs.setAttribute('aria-pressed', s); q.textContent = s ? ba.strong : ba.weak; w.textContent = s ? ba.swhy : ba.wwhy; };
+  bw.onclick = () => show(false); bs.onclick = () => show(true); show(false);
+  return el;
+}
+
+/* ===== Barème ===== */
+C.forEach(c => {
+  const a = document.createElement('a'); a.href = `#step-${c.id}`; a.style.cssText = `--c:${c.col};flex:${c.pts}`;
+  a.innerHTML = `<b>${c.pts}</b><span>${c.id}</span>`; a.title = `${c.id} · ${c.n} : ${c.pts} pts`;
+  if (c.id === 'C7' || c.id === 'C8') a.href = '#graphisme';
+  $('scale').appendChild(a);
+  const g = document.createElement('a'); g.className = 'comp'; g.href = a.href; g.style.setProperty('--c', c.col);
+  g.innerHTML = `<i></i><span><b>${c.id}</b> ${c.n}<small>${c.crit.length} attendus vérifiés</small></span><b>${c.pts} pts</b>`;
+  $('comp-grid').appendChild(g);
+});
+
+/* ===== Étapes ===== */
+STEPS.forEach((s, i) => {
+  const comp = C[s.c];
+  const st = document.createElement('div'); st.className = 'step'; st.id = `step-${comp.id}`; st.style.setProperty('--c', comp.col);
+  st.innerHTML = `<div class="step-n">${i + 1}</div><div class="step-body"><h3>${s.t}<small>${comp.id} · ${comp.pts} pts</small></h3><div class="two"><div class="box"><h4>Ce qu'il fallait faire</h4><ul>${s.do.map(d => `<li>${d}</li>`).join('')}</ul></div></div><p class="tip">${s.tip}</p></div>`;
+  st.querySelector('.two').appendChild(checklist(s.c));
+  if (BA[i]) st.querySelector('.step-body').appendChild(beforeAfter(BA[i]));
+  $('steps').appendChild(st);
+});
+document.querySelectorAll('[data-comp]').forEach(b => { const ci = C.findIndex(c => c.id === b.dataset.comp); b.replaceWith(checklist(ci)); });
+
+/* ===== Score ===== */
+C.forEach(c => {
+  const r = document.createElement('div'); r.className = 'sp-row';
+  r.innerHTML = `<span>${c.id} · ${c.n}</span><span class="t"><i id="sb-${c.id}" style="width:0"></i></span><span class="v" id="sv-${c.id}">0 / ${c.pts}</span>`;
+  $('sp-bars').appendChild(r);
+});
+function updateScore(){
+  let tot = 0;
+  C.forEach(c => {
+    const done = c.crit.filter((_, k) => state[`${c.id}-${k}`]).length;
+    const p = Math.round(done / c.crit.length * c.pts * 10) / 10;
+    tot += p;
+    document.querySelectorAll(`[data-cs="${c.id}"]`).forEach(e => e.textContent = fmt(p));
+    $(`sb-${c.id}`).style.width = (done / c.crit.length * 100) + '%';
+    $(`sv-${c.id}`).textContent = `${fmt(p)} / ${c.pts}`;
+  });
+  $('total').textContent = fmt(tot); $('pill').textContent = fmt(tot);
+}
+$('reset').addEventListener('click', () => { state = {}; save(); document.querySelectorAll('.chk input').forEach(i => i.checked = false); updateScore(); });
+updateScore();
+
+/* ===== Copie : annotations ===== */
+$('notes-t').addEventListener('change', e => $('copy').classList.toggle('no-notes', !e.target.checked));
+
+/* ===== Croquis : calques ===== */
+$('layers').querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+  const on = b.getAttribute('aria-pressed') !== 'true'; b.setAttribute('aria-pressed', on);
+  const l = b.dataset.l;
+  if (l === 'col') $('sketch').classList.toggle('col', on);
+  else $('L-' + l).style.display = on ? '' : 'none';
+}));
+
+/* ===== Mini étude de cas ===== */
+const SOCLE = [
+  {n:'Acier', fam:'Métaux', sc:'alliages', r:'g', v:'ρ ≈ 7,8 g/cm³ · E ≈ 200 GPa · dureté ≈ 4', t:'Très dense : un petit socle est déjà lourd, donc la lampe est stable. Très rigide. À l\'intérieur, la corrosion n\'est pas un problème.', why:'masse élevée (ρ ≈ 7,8 g/cm³) = stabilité'},
+  {n:'Granit', fam:'Minéraux', sc:'roches', r:'g', v:'ρ ≈ 2,7 g/cm³ · dureté ≈ 6-7 · RC ≈ 150-250 MPa', t:'Lourd à volume égal d\'un plastique, très dur (ne se raye pas), aspect noble. Travaille en compression : parfait pour un socle posé. Attention s\'il tombe : rupture fragile.', why:'masse et dureté 6-7 : stable et inrayable'},
+  {n:'Aluminium', fam:'Métaux', sc:'purs', r:'m', v:'ρ ≈ 2,7 g/cm³ · E ≈ 70 GPa · λ ≈ 237 W/(m·K)', t:'Rigide mais léger : il faudrait un socle très volumineux ou un lest caché pour équilibrer le bras.', why:'trop léger sans lest'},
+  {n:'PMMA (Plexiglas)', fam:'Organiques', sc:'synthétiques', r:'b', v:'ρ ≈ 1,18 g/cm³ · E ≈ 3 GPa · dureté ≈ 2-3', t:'Très léger : la lampe basculerait dès qu\'on déplie le bras. Se raye facilement sur un bureau.', why:'ρ ≈ 1,18 g/cm³ : socle trop léger'}];
+const BRAS = [
+  {n:'Aluminium', fam:'Métaux', sc:'purs', r:'g', v:'ρ ≈ 2,7 g/cm³ · E ≈ 70 GPa · λ ≈ 237 W/(m·K)', t:'E/ρ ≈ 26 : rigide et léger, le bras ne plie pas et ne fait pas basculer la lampe. Bon conducteur thermique : il évacue la chaleur de la LED. Conducteur électrique : les fils doivent être gainés.', why:'E/ρ ≈ 26 : rigide et léger'},
+  {n:'Chêne', fam:'Organiques', sc:'naturels', r:'g', v:'ρ ≈ 0,75 g/cm³ · E ≈ 10 GPa · λ ≈ 0,17 W/(m·K)', t:'Léger, assez rigide (E/ρ ≈ 13), isolant thermique et électrique : agréable et sûr à manipuler. Il faut des sections un peu plus épaisses qu\'en métal.', why:'léger, isolant, agréable au toucher'},
+  {n:'Cuivre', fam:'Métaux', sc:'purs', r:'b', v:'ρ ≈ 8,9 g/cm³ · E ≈ 120 GPa · λ ≈ 390 W/(m·K)', t:'Beaucoup trop dense pour une pièce en hauteur au bout d\'un bras : la lampe basculerait. Cher.', why:'ρ ≈ 8,9 g/cm³ : trop lourd en bout de bras'},
+  {n:'PVC', fam:'Organiques', sc:'synthétiques', r:'b', v:'ρ ≈ 1,4 g/cm³ · E ≈ 3 GPa · dureté ≈ 2', t:'E ≈ 3 GPa : trop souple, le bras fléchirait sous le poids de la tête. À réserver aux pièces non porteuses.', why:'E ≈ 3 GPa : trop souple'}];
+const pick = {socle:null, bras:null};
+const RL = {g:['g','Bon choix'], m:['m','Possible avec précautions'], b:['b','À éviter']};
+function opts(list, key){
+  list.forEach((m, i) => {
+    const b = document.createElement('button'); b.type = 'button'; b.setAttribute('aria-pressed', 'false');
+    b.innerHTML = `<span>${m.n}</span><small>${m.fam}</small>`;
+    b.addEventListener('click', () => {
+      $('opt-' + key).querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', 'false')); b.setAttribute('aria-pressed', 'true');
+      pick[key] = i;
+      $('fb-' + key).innerHTML = `<span class="chip ${RL[m.r][0]}">${RL[m.r][1]}</span><span class="mono small">${m.v}</span><span>${m.t}</span>`;
+      caseResult();
+    });
+    $('opt-' + key).appendChild(b);
+  });
+}
+opts(SOCLE, 'socle'); opts(BRAS, 'bras');
+function caseResult(){
+  if (pick.socle === null || pick.bras === null) { $('fam-alert').innerHTML = ''; $('my-matrix').innerHTML = ''; return; }
+  const s = SOCLE[pick.socle], b = BRAS[pick.bras];
+  const same = s.fam === b.fam;
+  $('fam-alert').innerHTML = same
+    ? `<p class="alert b">Attention : ${s.n.toLowerCase()} et ${b.n.toLowerCase()} sont tous les deux des ${s.fam.toLowerCase()}. Le sujet exige deux familles différentes.</p>`
+    : `<p class="alert g">Deux familles différentes (${s.fam.toLowerCase()} et ${b.fam.toLowerCase()}) : conforme au sujet.</p>`;
+  const others = (list, i) => list.filter((_, k) => k !== i).filter(m => m.r !== 'g').slice(0, 1).map(m => `${m.n} écarté : ${m.why}`).join('');
+  const alt = (list, i) => list.filter((_, k) => k !== i).filter(m => m.r !== 'g')[0] || list.filter((_, k) => k !== i)[0];
+  $('my-matrix').innerHTML = `<p class="eyebrow" style="margin-bottom:6px">Ta matrice de décision</p><div class="tbl-wrap"><table>
+    <thead><tr><th>Partie</th><th>Contrainte principale</th><th>Candidat 1</th><th>Candidat 2</th><th>Retenu + justification</th></tr></thead>
+    <tbody>
+      <tr><td class="pn" style="--pc:var(--c1)">Socle</td><td>Stabilité (masse) + ne pas se rayer</td><td>${s.n}</td><td>${alt(SOCLE, pick.socle).n}</td><td><b>${s.n}</b> : ${s.why}. ${others(SOCLE, pick.socle)}.</td></tr>
+      <tr><td class="pn" style="--pc:var(--c4)">Bras + tête</td><td>Rigidité sans masse + manipulation</td><td>${b.n}</td><td>${alt(BRAS, pick.bras).n}</td><td><b>${b.n}</b> : ${b.why}. ${others(BRAS, pick.bras)}.</td></tr>
+    </tbody></table></div>
+    <p class="small muted" style="margin-top:8px">${(s.r === 'b' || b.r === 'b') ? 'Un de tes choix est « à éviter » : relis son commentaire et essaie un autre matériau.' : 'Au DS, écris cette matrice à la main et complète chaque case avec une valeur et son unité.'}</p>`;
+}
+</script>
+
+</body></html>
